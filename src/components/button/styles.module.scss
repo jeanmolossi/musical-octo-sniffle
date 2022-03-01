@@ -6,9 +6,16 @@
 	background-color: $bgColor;
 	color: $color;
 	font-weight: 600;
-	@include boxShadow($color);
 
 	transition: background-color 0.2s ease-out;
+
+	&.withShadow {
+		@include boxShadow($color);
+	}
+
+	&.withShadow:hover {
+		@include boxShadow($bgColor);
+	}
 
 	&[disabled] {
 		background-color: color.adjust($color, $lightness: -5%, $alpha: -0.7);
@@ -18,17 +25,31 @@
 
 	&:hover {
 		background-color: color.adjust($bgColor, $lightness: 5%);
-		@include boxShadow($color);
 	}
 }
 
 .button {
-	padding: 0.5rem;
-	margin: 0.5rem;
-
 	border: none;
-	border-radius: 0.25rem;
+	border-radius: 0.5rem;
 	cursor: pointer;
+
+	&.small {
+		padding: 0.25rem 0.5rem;
+		margin: 0.25rem;
+		font-size: 0.85rem;
+	}
+
+	&.medium {
+		padding: 0.5rem;
+		margin: 0.5rem;
+	}
+
+	&.large {
+		padding: 0.625rem;
+		margin: 0.625rem;
+		font-size: 1.25rem;
+	}
+
 
 	&.neutral {
 		@include variant($color: $gray, $bgColor: $lightGray);
@@ -57,4 +78,6 @@
 	&[disabled] {
 		cursor: not-allowed;
 	}
+
+
 }

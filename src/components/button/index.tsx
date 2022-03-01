@@ -11,19 +11,28 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 		| "danger"
 		| "info"
 		| "highlight";
+
+	size?: "small" | "medium" | "large";
+	withShadow?: boolean;
 }
 
 export const Button = ({
 	label,
 	variant = "neutral",
 	type = "button",
+	size = "medium",
+	withShadow = false,
 	...rest
 }: ButtonProps) => {
+	const className = classnames(
+		styles.button,
+		styles[variant],
+		styles[size],
+		withShadow ? styles.withShadow : ""
+	);
+
 	return (
-		<button
-			className={classnames(styles.button, styles[variant])}
-			{...rest}
-		>
+		<button className={className} {...rest}>
 			{label}
 		</button>
 	);

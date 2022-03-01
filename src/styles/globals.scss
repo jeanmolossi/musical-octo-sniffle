@@ -26,6 +26,10 @@ button, input {
     line-height: 1.5;
 }
 
+button, label {
+	cursor: pointer;
+}
+
 #root {
     width: 100%;
     min-height: 100%;

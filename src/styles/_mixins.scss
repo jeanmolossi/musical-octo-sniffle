@@ -1,0 +1,9 @@
+@use 'sass:color';
+
+@function doOpacity($opacity: number, $color: color) {
+  @return color.adjust($color, $alpha: $opacity - 1);
+}
+
+@mixin boxShadow($color: color) {
+	box-shadow: 0 0.5px 2px #{doOpacity(0.3, $color)};
+}

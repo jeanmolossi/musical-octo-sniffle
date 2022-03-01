@@ -1,0 +1,22 @@
+[
+    {
+        "id": "1",
+        "user": "John Doe",
+        "username": "johndoe",
+        "pass": "12345",
+        "photo": "https://randomuser.me/api/portraits/men/84.jpg"
+    },
+    {
+        "id": "2",
+        "user": "Elisa",
+        "username": "elisa",
+        "pass": "12345",
+        "photo": "https://randomuser.me/api/portraits/women/40.jpg"
+    },
+    {
+        "id": "3",
+        "user": "Robert",
+        "username": "robert",
+        "pass": "12345"
+    }
+]

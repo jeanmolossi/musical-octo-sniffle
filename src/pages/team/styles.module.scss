@@ -1,0 +1,7 @@
+@import './src/styles/variables.scss';
+
+.container {
+	display: grid;
+	grid-template-columns: 320px 1fr;
+	min-height: 100%;
+}

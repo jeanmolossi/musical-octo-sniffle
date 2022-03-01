@@ -1,0 +1,33 @@
+@import 'variables';
+
+* {
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+}
+
+html, body {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: $gray;
+    background-color: $lightGray;
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+}
+
+button, input {
+	font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+#root {
+    width: 100%;
+    min-height: 100%;
+    display: block;
+}

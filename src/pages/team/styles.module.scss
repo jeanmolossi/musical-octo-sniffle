@@ -1,7 +1,36 @@
 @import './src/styles/variables.scss';
 
 .container {
-	display: grid;
-	grid-template-columns: 320px 1fr;
-	min-height: 100%;
+	display: flex;
+	flex-direction: column;
+
+	> h1 {
+		margin-bottom: 2rem;
+	}
+
+	.team {
+		display: flex;
+		gap: 1rem;
+		justify-content: space-evenly;
+		max-width: 40rem;
+		width: 100%;
+		margin: 0 auto;
+		flex-wrap: wrap;
+
+		.user {
+			display: flex;
+			flex-direction: column;
+			width: 10rem;
+			height: 10rem;
+			justify-content: center;
+			align-items: center;
+
+			> img {
+				width: 100%;
+				border-radius: 50%;
+				object-fit: cover;
+				margin-bottom: 0.5rem;
+			}
+		}
+	}
 }

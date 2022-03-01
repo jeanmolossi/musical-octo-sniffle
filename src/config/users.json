@@ -8,14 +8,14 @@
     },
     {
         "id": "2",
-        "user": "Elisa",
+        "user": "Elisa Sanches",
         "username": "elisa",
         "pass": "12345",
         "photo": "https://randomuser.me/api/portraits/women/40.jpg"
     },
     {
         "id": "3",
-        "user": "Robert",
+        "user": "Robert Flintstone",
         "username": "robert",
         "pass": "12345"
     }

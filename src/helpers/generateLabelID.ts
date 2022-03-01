@@ -4,7 +4,6 @@ export function generateLabelID() {
 
 	return "xxxxxxxx-xxxxxxxx".replace(/[x]/g, (c) => {
 		let r = Math.random() * 16;
-		console.log({ c, d });
 		if (d > 0) {
 			r = (d + r) % 16 | 0;
 			d = Math.floor(d / 16);

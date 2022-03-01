@@ -1,15 +1,24 @@
-import React, { FormEvent } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/button";
 import { Input } from "../../components/input";
+import { useAuth } from "../../contexts/auth";
 import styles from "./styles.module.scss";
 
 export const Login = () => {
-	const navigate = useNavigate();
+	const { login } = useAuth();
+
+	const [username, setUsername] = useState("");
+	const [pass, setPass] = useState("");
 
 	const onSubmit = (e: FormEvent) => {
 		e.preventDefault();
-		navigate("/home");
+		try {
+			login(username, pass);
+		} catch (e) {
+			const err = e as Error;
+			alert(err.message);
+		}
 	};
 
 	return (
@@ -20,12 +29,21 @@ export const Login = () => {
 				<fieldset>
 					<legend>Sign in</legend>
 
-					<Input label="Username" placeholder="Ex.: johndoe" />
+					<Input
+						label="Username"
+						placeholder="Ex.: johndoe"
+						onChange={(e: ChangeEvent<HTMLInputElement>) =>
+							setUsername(e.target.value)
+						}
+					/>
 
 					<Input
 						label="Password"
 						placeholder="type your password"
 						type="password"
+						onChange={(e: ChangeEvent<HTMLInputElement>) =>
+							setPass(e.target.value)
+						}
 					/>
 
 					<Button label="Login" variant="info" />

@@ -1,15 +1,12 @@
 import React from "react";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import { HiOutlineViewGrid, HiOutlineUser } from "react-icons/hi";
 import { Button } from "../../components/button";
 import styles from "./styles.module.scss";
+import { AuthProvider, useAuth } from "../../contexts/auth";
 
-export const Layout = () => {
-	const navigate = useNavigate();
-
-	const logout = () => {
-		navigate("/");
-	};
+const LayoutComponent = () => {
+	const { logout } = useAuth();
 
 	return (
 		<div className={styles.container}>
@@ -38,5 +35,13 @@ export const Layout = () => {
 				<Outlet />
 			</main>
 		</div>
+	);
+};
+
+export const Layout = () => {
+	return (
+		<AuthProvider>
+			<LayoutComponent />
+		</AuthProvider>
 	);
 };

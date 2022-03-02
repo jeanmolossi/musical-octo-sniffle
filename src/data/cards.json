@@ -1,0 +1,149 @@
+{
+	"todo": [
+		{
+			"id": 1,
+			"title":"Prototype a new app",
+			"author":"John Doe",
+			"createdAt": "2020-03-08T12:00:00.000Z",
+			"description":"Please use trello and designs in Dribbble as reference. And carry on",
+			"image":"https://cdn.pixabay.com/photo/2021/11/20/23/53/desert-6812927_960_720.jpg",
+			"attachments":[
+				{ "type": "file", "attachment": "docs.google.com" },
+				{ "type": "image", "attachment": "img.google.com" },
+				{ "type": "link", "attachment": "url.google.com" }
+			],
+			"categories":[
+				{ "type": "neutral", "text": "Design" },
+				{ "type": "success", "text": "Development" },
+				{ "type": "warning", "text": "UML" }
+			],
+			"comments":2,
+			"lastComments":[
+				"https://randomuser.me/api/portraits/men/81.jpg",
+				"https://randomuser.me/api/portraits/women/41.jpg"
+			]
+		},
+		{
+			"id": 2,
+			"title":"Draw the API architecture and CI/CD",
+			"author":"John Doe",
+			"createdAt": "2020-03-09T12:00:00.000Z",
+			"description":"Please use trello and designs in Dribbble as reference. And carry on",
+			"image":"https://cdn.pixabay.com/photo/2021/11/20/23/53/desert-6812927_960_720.jpg",
+			"categories":[
+				{ "type": "danger", "text": "Backend" },
+				{ "type": "info", "text": "Architectural" },
+				{ "type": "highlight", "text": "Deploy" }
+			]
+		},
+		{
+			"id": 3,
+			"title":"Start the project",
+			"author":"John Doe",
+			"createdAt": "2020-03-09T12:00:00.000Z",
+			"image":"https://cdn.pixabay.com/photo/2021/11/20/23/53/desert-6812927_960_720.jpg",
+			"categories":[
+				{ "type": "success", "text": "Development" },
+				{ "type": "info", "text": "Architectural" }
+			],
+			"comments":1,
+			"lastComments":[
+				"https://randomuser.me/api/portraits/men/81.jpg"
+			]
+		}
+	],
+
+	"doing": [
+		{
+			"id": 4,
+			"title":"Card",
+			"author":"John Doe",
+			"createdAt": "2020-03-08T12:00:00.000Z",
+			"description":"Please use trello and designs in Dribbble as reference. And carry on",
+			"image":"https://cdn.pixabay.com/photo/2021/11/20/23/53/desert-6812927_960_720.jpg",
+			"attachments":[
+				{ "type": "file", "attachment": "docs.google.com" },
+				{ "type": "image", "attachment": "img.google.com" },
+				{ "type": "link", "attachment": "url.google.com" }
+			],
+			"categories":[
+				{ "type": "neutral", "text": "Design" },
+				{ "type": "success", "text": "Development" },
+				{ "type": "warning", "text": "UML" }
+			],
+			"comments":2,
+			"lastComments":[
+				"https://randomuser.me/api/portraits/men/81.jpg",
+				"https://randomuser.me/api/portraits/women/41.jpg"
+			]
+		},
+		{
+			"id": 5,
+			"title":"Card",
+			"author":"John Doe",
+			"createdAt": "2020-03-09T12:00:00.000Z",
+			"description":"Please use trello and designs in Dribbble as reference. And carry on",
+			"image":"https://cdn.pixabay.com/photo/2021/11/20/23/53/desert-6812927_960_720.jpg",
+			"categories":[
+				{ "type": "neutral", "text": "Design" },
+				{ "type": "success", "text": "Development" },
+				{ "type": "warning", "text": "UML" }
+			]
+		},
+		{
+			"id": 6,
+			"title":"Card",
+			"author":"John Doe",
+			"createdAt": "2020-03-09T12:00:00.000Z",
+			"image":"https://cdn.pixabay.com/photo/2021/11/20/23/53/desert-6812927_960_720.jpg",
+			"categories":[
+				{ "type": "neutral", "text": "Design" },
+				{ "type": "success", "text": "Development" },
+				{ "type": "warning", "text": "UML" }
+			],
+			"comments":1,
+			"lastComments":[
+				"https://randomuser.me/api/portraits/men/81.jpg"
+			]
+		}
+	],
+
+	"done": [
+		{
+			"id": 7,
+			"title":"Card",
+			"author":"John Doe",
+			"createdAt": "2020-03-08T12:00:00.000Z",
+			"description":"Please use trello and designs in Dribbble as reference. And carry on",
+			"image":"https://cdn.pixabay.com/photo/2021/11/20/23/53/desert-6812927_960_720.jpg",
+			"attachments":[
+				{ "type": "file", "attachment": "docs.google.com" },
+				{ "type": "image", "attachment": "img.google.com" },
+				{ "type": "link", "attachment": "url.google.com" }
+			],
+			"categories":[
+				{ "type": "neutral", "text": "Design" },
+				{ "type": "success", "text": "Development" },
+				{ "type": "warning", "text": "UML" }
+			],
+			"comments":2,
+			"lastComments":[
+				"https://randomuser.me/api/portraits/men/81.jpg",
+				"https://randomuser.me/api/portraits/women/41.jpg"
+			]
+		},
+		{
+			"id": 8,
+			"title":"Card",
+			"author":"John Doe",
+			"createdAt": "2020-03-09T12:00:00.000Z",
+			"description":"Please use trello and designs in Dribbble as reference. And carry on",
+			"image":"https://cdn.pixabay.com/photo/2021/11/20/23/53/desert-6812927_960_720.jpg",
+			"categories":[
+				{ "type": "neutral", "text": "Design" },
+				{ "type": "success", "text": "Development" },
+				{ "type": "warning", "text": "UML" }
+			]
+		}
+	]
+}

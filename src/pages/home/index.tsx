@@ -1,106 +1,103 @@
-import React from "react";
-import { Card } from "../../components/card";
+import React, { useState } from "react";
+import { DragDropContext, DropResult } from "react-beautiful-dnd";
+import cards from "../../data/cards.json";
+import { Card, CardProps } from "../../components/card";
 import styles from "./styles.module.scss";
+import { Board } from "../../components/board";
+
+type Tasks = {
+	todo: CardProps[];
+	doing: CardProps[];
+	done: CardProps[];
+};
+
+const { todo, doing, done } = cards as Tasks;
 
 export const Home = () => {
+	const [tasks, setTasks] = useState<Tasks>({ todo, doing, done });
+
+	const list = (droppableId: string) => {
+		const keys: { [k: string]: keyof typeof tasks } = {
+			todoColumn: "todo",
+			doingColumn: "doing",
+			doneColumn: "done",
+		};
+
+		return keys[droppableId] as keyof typeof tasks;
+	};
+
+	const moveSameColumn = ({ source, destination }: DropResult) => {
+		if (source.droppableId !== destination?.droppableId) {
+			return;
+		}
+
+		const taskKey = list(source.droppableId);
+
+		const result = Array.from(tasks[taskKey]);
+		const [removed] = result.splice(source.index, 1);
+		result.splice(destination.index, 0, removed);
+
+		const newState = { ...tasks };
+		newState[taskKey] = result;
+
+		setTasks(newState);
+	};
+
+	const moveBetweenColumns = ({ source, destination }: DropResult) => {
+		if (source.droppableId === destination!.droppableId) {
+			return;
+		}
+
+		const sourceTaskKey = list(source.droppableId);
+		const destinationTaskKey = list(destination!.droppableId);
+
+		console.log({ sourceTaskKey, destinationTaskKey });
+
+		const sourceTask = Array.from(tasks[sourceTaskKey]);
+		const destinationTask = Array.from(tasks[destinationTaskKey]);
+		const [removed] = sourceTask.splice(source.index, 1);
+
+		destinationTask.splice(destination!.index, 0, removed);
+
+		const newState = { ...tasks };
+		newState[sourceTaskKey] = sourceTask;
+		newState[destinationTaskKey] = destinationTask;
+
+		console.log(newState);
+
+		setTasks(newState);
+	};
+
+	const onDragEnd = (result: DropResult) => {
+		if (!result.destination) {
+			return;
+		}
+
+		moveSameColumn(result);
+		moveBetweenColumns(result);
+	};
+
 	return (
 		<div className={styles.container}>
-			<div className={styles.boardContainer}>
-				<h2>TO DO</h2>
-
-				<Card
-					title="Card"
-					author="John Doe"
-					createdAt={new Date().toISOString()}
-					description="Please use trello and designs in Dribbble as reference. And carry on"
-					image="https://cdn.pixabay.com/photo/2021/11/20/23/53/desert-6812927_960_720.jpg"
-					attachments={[
-						{ type: "file", attachment: "docs.google.com" },
-						{ type: "image", attachment: "img.google.com" },
-						{ type: "link", attachment: "url.google.com" },
-					]}
-					categories={[
-						{ type: "neutral", text: "Design" },
-						{ type: "success", text: "Development" },
-						{ type: "warning", text: "UML" },
-					]}
-					comments={2}
-					lastComments={[
-						"https://randomuser.me/api/portraits/men/81.jpg",
-						"https://randomuser.me/api/portraits/women/41.jpg",
-					]}
+			<DragDropContext onDragEnd={onDragEnd}>
+				<Board
+					title="TO DO"
+					droppableId="todoColumn"
+					cards={tasks.todo}
 				/>
-				<Card
-					title="Card"
-					author="John Doe"
-					createdAt={new Date().toISOString()}
-					image="https://cdn.pixabay.com/photo/2021/11/20/23/53/desert-6812927_960_720.jpg"
-					categories={[
-						{ type: "danger", text: "Backend" },
-						{ type: "info", text: "Architectural" },
-						{ type: "highlight", text: "Deploy" },
-					]}
-				/>
-				<Card
-					title="Card"
-					author="John Doe"
-					createdAt={new Date().toISOString()}
-					attachments={[
-						{ type: "file", attachment: "docs.google.com" },
-						{ type: "image", attachment: "docs.google.com" },
-						{ type: "link", attachment: "docs.google.com" },
-					]}
-					categories={[
-						{ type: "neutral", text: "Design" },
-						{ type: "success", text: "Development" },
-						{ type: "warning", text: "UML" },
-					]}
-					comments={1}
-					lastComments={[
-						"https://randomuser.me/api/portraits/women/41.jpg",
-					]}
-				/>
-			</div>
 
-			<div className={styles.boardContainer}>
-				<h2>Doing</h2>
-
-				<Card
-					title="Card"
-					author="John Doe"
-					createdAt={new Date().toISOString()}
-					attachments={[
-						{ type: "file", attachment: "docs.google.com" },
-						{ type: "image", attachment: "docs.google.com" },
-						{ type: "link", attachment: "docs.google.com" },
-					]}
-					categories={[
-						{ type: "neutral", text: "Design" },
-						{ type: "success", text: "Development" },
-						{ type: "warning", text: "UML" },
-					]}
-					comments={1}
-					lastComments={[
-						"https://randomuser.me/api/portraits/women/41.jpg",
-					]}
+				<Board
+					title="Doing"
+					droppableId="doingColumn"
+					cards={tasks.doing}
 				/>
-			</div>
 
-			<div className={styles.boardContainer}>
-				<h2>Done</h2>
-
-				<Card
-					title="Card"
-					author="John Doe"
-					createdAt={new Date().toISOString()}
-					image="https://cdn.pixabay.com/photo/2021/11/20/23/53/desert-6812927_960_720.jpg"
-					categories={[
-						{ type: "danger", text: "Backend" },
-						{ type: "info", text: "Architectural" },
-						{ type: "highlight", text: "Deploy" },
-					]}
+				<Board
+					title="Done"
+					droppableId="doneColumn"
+					cards={tasks.done}
 				/>
-			</div>
+			</DragDropContext>
 		</div>
 	);
 };

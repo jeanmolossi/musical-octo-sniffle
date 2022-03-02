@@ -15,6 +15,8 @@ import {
 	NotDraggingStyle,
 } from "react-beautiful-dnd";
 import { classnames } from "../../helpers/classnames";
+import { Modal } from "../modal";
+import { useModal } from "../../helpers/use-modal";
 
 interface CartAttachment {
 	type: "file" | "image" | "link";
@@ -53,8 +55,9 @@ export const Card = ({
 	categories = [],
 	comments = 0,
 	lastComments = [],
-	isDragging = false,
 }: CardProps) => {
+	const [isOpen, onOpen, onClose] = useModal();
+
 	const date = useMemo(() => {
 		const _date = new Date(createdAt).toDateString();
 
@@ -90,93 +93,106 @@ export const Card = ({
 	};
 
 	return (
-		<Draggable draggableId={`${id}`} index={index}>
-			{(provided) => (
-				<div
-					className={classnames(styles.card)}
-					{...provided.draggableProps}
-					{...provided.dragHandleProps}
-					ref={provided.innerRef}
-				>
-					<header>
-						<div>
-							<h1>{title}</h1>
-						</div>
-						<div className={styles.card__sub_header}>
-							<span>{date}</span>
-							<span>&#8226;</span>
-							<span>
-								Criado por <Link to="/team">{author}</Link>
-							</span>
-						</div>
-					</header>
+		<>
+			<Draggable draggableId={`${id}`} index={index}>
+				{(provided) => (
+					<div
+						className={classnames(styles.card)}
+						{...provided.draggableProps}
+						{...provided.dragHandleProps}
+						ref={provided.innerRef}
+						onClick={onOpen}
+					>
+						<header>
+							<div>
+								<h1>{title}</h1>
+							</div>
+							<div className={styles.card__sub_header}>
+								<span>{date}</span>
+								<span>&#8226;</span>
+								<span>
+									Criado por <Link to="/team">{author}</Link>
+								</span>
+							</div>
+						</header>
 
-					<main>
-						<div className={styles.card__content}>
-							{RenderIf(
-								Boolean(description),
-								<p>{truncateDescription}</p>
-							)}
+						<main>
+							<div className={styles.card__content}>
+								{RenderIf(
+									Boolean(description),
+									<p>{truncateDescription}</p>
+								)}
+
+								{RenderIf(
+									Boolean(image),
+									<div className={styles.card__content_image}>
+										<img src={image} alt="Card" />
+									</div>
+								)}
+
+								{RenderIf(
+									Boolean(attachments.length),
+									<ul className={styles.card__link_list}>
+										{attachments.map((attachment, key) => (
+											<li key={key}>
+												<a
+													href="#"
+													title={
+														attachment.attachment
+													}
+												>
+													{IconAttachment(
+														attachment.type
+													)}
+													<span>
+														{attachment.attachment}
+													</span>
+												</a>
+											</li>
+										))}
+									</ul>
+								)}
+							</div>
 
 							{RenderIf(
-								Boolean(image),
-								<div className={styles.card__content_image}>
-									<img src={image} alt="Card" />
+								Boolean(categories.length),
+								<div className={styles.card__categories}>
+									{categories.map((category, key) => (
+										<Button
+											key={key}
+											size="small"
+											variant={category.type}
+											label={category.text}
+										/>
+									))}
 								</div>
 							)}
+						</main>
 
-							{RenderIf(
-								Boolean(attachments.length),
-								<ul className={styles.card__link_list}>
-									{attachments.map((attachment, key) => (
-										<li key={key}>
-											<a
-												href="#"
-												title={attachment.attachment}
-											>
-												{IconAttachment(
-													attachment.type
-												)}
-												<span>
-													{attachment.attachment}
-												</span>
-											</a>
-										</li>
-									))}
-								</ul>
-							)}
-						</div>
+						<footer>
+							<button className={styles.card__comments_button}>
+								<HiOutlineChat /> {comments}
+							</button>
 
-						{RenderIf(
-							Boolean(categories.length),
-							<div className={styles.card__categories}>
-								{categories.map((category, key) => (
-									<Button
+							<div className={styles.card__avatar_group}>
+								{lastComments.map((photo, key) => (
+									<div
 										key={key}
-										size="small"
-										variant={category.type}
-										label={category.text}
-									/>
+										className={styles.card__avatar}
+									>
+										<img src={photo} alt="Avatar" />
+									</div>
 								))}
 							</div>
-						)}
-					</main>
+						</footer>
+					</div>
+				)}
+			</Draggable>
 
-					<footer>
-						<button className={styles.card__comments_button}>
-							<HiOutlineChat /> {comments}
-						</button>
-
-						<div className={styles.card__avatar_group}>
-							{lastComments.map((photo, key) => (
-								<div key={key} className={styles.card__avatar}>
-									<img src={photo} alt="Avatar" />
-								</div>
-							))}
-						</div>
-					</footer>
-				</div>
-			)}
-		</Draggable>
+			<Modal isOpen={isOpen} onClose={onClose}>
+				<h1>{title}</h1>
+				<p>{description || ""}</p>
+			</Modal>
+		</>
 	);
 };

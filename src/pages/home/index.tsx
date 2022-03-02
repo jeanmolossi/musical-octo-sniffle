@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import cards from "../../data/cards.json";
-import { Card, CardProps } from "../../components/card";
+import { CardProps } from "../../components/card";
 import styles from "./styles.module.scss";
 import { Board } from "../../components/board";
 
@@ -51,8 +51,6 @@ export const Home = () => {
 		const sourceTaskKey = list(source.droppableId);
 		const destinationTaskKey = list(destination!.droppableId);
 
-		console.log({ sourceTaskKey, destinationTaskKey });
-
 		const sourceTask = Array.from(tasks[sourceTaskKey]);
 		const destinationTask = Array.from(tasks[destinationTaskKey]);
 		const [removed] = sourceTask.splice(source.index, 1);
@@ -62,8 +60,6 @@ export const Home = () => {
 		const newState = { ...tasks };
 		newState[sourceTaskKey] = sourceTask;
 		newState[destinationTaskKey] = destinationTask;
-
-		console.log(newState);
 
 		setTasks(newState);
 	};

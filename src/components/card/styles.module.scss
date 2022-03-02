@@ -160,3 +160,80 @@
 		transition: all 0.3s ease-in-out;
 	}
 }
+
+
+.modal__content{
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+
+	> h1 {
+		font-family: 'Inter', sans-serif;
+		font-style: normal;
+		font-weight: 600;
+		font-size: 1.25rem;
+	}
+
+	> h2 {
+		font-family: Inter;
+		font-size: 0.9rem;
+		font-weight: 600;
+		color: $mediumGray;
+		text-transform: uppercase;
+	}
+
+	> p {
+		font-family: Inter;
+		font-size: 0.9rem;
+		font-weight: 400;
+	}
+
+	.divider{
+		width: 100%;
+		height: 1px;
+		background-color: $slateGray;
+		margin: 1rem 0;
+	}
+
+	.task__comments{
+		display: flex;
+		flex-direction: column;
+
+		.task__comment{
+			display: inline-flex;
+			gap: 1rem;
+		}
+
+		.comment__avatar{
+			> img {
+				border-radius: 100%;
+				width: 3rem;
+				height: 3rem;
+				object-fit: cover;
+				object-position: center center;
+			}
+		}
+
+		.comment__content{
+			> span {
+				font-family: 'Inter', sans-serif;
+				font-size: 0.9rem;
+				color: $slateGray
+			}
+
+			> p {
+				font-family: 'Inter', sans-serif;
+				font-size: 0.9rem;
+				font-weight: 500;
+			}
+		}
+	}
+
+	.task__comment_area{
+		> div {
+			margin: 0;
+			gap: 0.5rem
+		}
+	}
+
+}

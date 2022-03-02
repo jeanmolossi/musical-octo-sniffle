@@ -17,6 +17,7 @@ import {
 import { classnames } from "../../helpers/classnames";
 import { Modal } from "../modal";
 import { useModal } from "../../helpers/use-modal";
+import { Input } from "../input";
 
 interface CartAttachment {
 	type: "file" | "image" | "link";
@@ -190,8 +191,67 @@ export const Card = ({
 			</Draggable>
 
 			<Modal isOpen={isOpen} onClose={onClose}>
-				<h1>{title}</h1>
-				<p>{description || ""}</p>
+				<div className={styles.modal__content}>
+					<h1>{title}</h1>
+
+					<h2>TODO description</h2>
+					<p>{description || ""}</p>
+
+					<div className={styles.divider}></div>
+					<div className={styles.task__comments}>
+						<div className={styles.task__comment}>
+							<div className={styles.comment__avatar}>
+								{RenderIf(
+									Boolean(author),
+									<img
+										src={
+											"https://randomuser.me/api/portraits/men/75.jpg"
+										}
+										alt="Avatar"
+									/>
+								)}
+							</div>
+
+							<div className={styles.comment__content}>
+								<span>John Doe says:</span>
+								<p>
+									I am using this as a reference every I need.
+									Thank you!
+								</p>
+							</div>
+						</div>
+
+						<div className={styles.task__comment}>
+							<div className={styles.comment__avatar}>
+								{RenderIf(
+									Boolean(author),
+									<img
+										src={
+											"https://randomuser.me/api/portraits/women/30.jpg"
+										}
+										alt="Avatar"
+									/>
+								)}
+							</div>
+
+							<div className={styles.comment__content}>
+								<span>Elisa Sanches says:</span>
+								<p>
+									I am using this as a reference every I need.
+									Thank you!
+								</p>
+							</div>
+						</div>
+					</div>
+					<div className={styles.divider}></div>
+					<div className={styles.task__comment_area}>
+						<Input
+							label="Add a comment"
+							placeholder="Leave a comment"
+							type="text"
+						/>
+					</div>
+				</div>
 			</Modal>
 		</>
 	);

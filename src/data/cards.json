@@ -56,16 +56,10 @@
 	"doing": [
 		{
 			"id": 4,
-			"title":"Card",
+			"title":"Finish app requirements",
 			"author":"John Doe",
 			"createdAt": "2020-03-08T12:00:00.000Z",
 			"description":"Please use trello and designs in Dribbble as reference. And carry on",
-			"image":"https://cdn.pixabay.com/photo/2021/11/20/23/53/desert-6812927_960_720.jpg",
-			"attachments":[
-				{ "type": "file", "attachment": "docs.google.com" },
-				{ "type": "image", "attachment": "img.google.com" },
-				{ "type": "link", "attachment": "url.google.com" }
-			],
 			"categories":[
 				{ "type": "neutral", "text": "Design" },
 				{ "type": "success", "text": "Development" },
@@ -79,31 +73,13 @@
 		},
 		{
 			"id": 5,
-			"title":"Card",
+			"title":"Design Review",
 			"author":"John Doe",
 			"createdAt": "2020-03-09T12:00:00.000Z",
 			"description":"Please use trello and designs in Dribbble as reference. And carry on",
-			"image":"https://cdn.pixabay.com/photo/2021/11/20/23/53/desert-6812927_960_720.jpg",
 			"categories":[
 				{ "type": "neutral", "text": "Design" },
-				{ "type": "success", "text": "Development" },
-				{ "type": "warning", "text": "UML" }
-			]
-		},
-		{
-			"id": 6,
-			"title":"Card",
-			"author":"John Doe",
-			"createdAt": "2020-03-09T12:00:00.000Z",
-			"image":"https://cdn.pixabay.com/photo/2021/11/20/23/53/desert-6812927_960_720.jpg",
-			"categories":[
-				{ "type": "neutral", "text": "Design" },
-				{ "type": "success", "text": "Development" },
-				{ "type": "warning", "text": "UML" }
-			],
-			"comments":1,
-			"lastComments":[
-				"https://randomuser.me/api/portraits/men/81.jpg"
+				{ "type": "success", "text": "Development" }
 			]
 		}
 	],
@@ -111,20 +87,12 @@
 	"done": [
 		{
 			"id": 7,
-			"title":"Card",
+			"title":"Talk with client",
 			"author":"John Doe",
 			"createdAt": "2020-03-08T12:00:00.000Z",
 			"description":"Please use trello and designs in Dribbble as reference. And carry on",
-			"image":"https://cdn.pixabay.com/photo/2021/11/20/23/53/desert-6812927_960_720.jpg",
 			"attachments":[
-				{ "type": "file", "attachment": "docs.google.com" },
-				{ "type": "image", "attachment": "img.google.com" },
-				{ "type": "link", "attachment": "url.google.com" }
-			],
-			"categories":[
-				{ "type": "neutral", "text": "Design" },
-				{ "type": "success", "text": "Development" },
-				{ "type": "warning", "text": "UML" }
+				{ "type": "file", "attachment": "docs.google.com" }
 			],
 			"comments":2,
 			"lastComments":[
@@ -134,16 +102,10 @@
 		},
 		{
 			"id": 8,
-			"title":"Card",
+			"title":"Talk with Devs",
 			"author":"John Doe",
 			"createdAt": "2020-03-09T12:00:00.000Z",
-			"description":"Please use trello and designs in Dribbble as reference. And carry on",
-			"image":"https://cdn.pixabay.com/photo/2021/11/20/23/53/desert-6812927_960_720.jpg",
-			"categories":[
-				{ "type": "neutral", "text": "Design" },
-				{ "type": "success", "text": "Development" },
-				{ "type": "warning", "text": "UML" }
-			]
+			"description":"Please use trello and designs in Dribbble as reference. And carry on"
 		}
 	]
 }

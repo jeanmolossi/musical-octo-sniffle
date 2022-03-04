@@ -32,6 +32,8 @@
 	border: none;
 	border-radius: 0.5rem;
 	cursor: pointer;
+	display: inline-flex;
+	align-items: center;
 
 	&.small {
 		padding: 0.25rem 0.5rem;

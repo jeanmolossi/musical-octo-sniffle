@@ -1,9 +1,10 @@
 import React from "react";
 import { classnames } from "../../helpers/classnames";
+import { RenderIf } from "../../helpers/render-if";
 import styles from "./styles.module.scss";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-	label: string;
+	label?: string;
 	variant?:
 		| "neutral"
 		| "success"
@@ -14,6 +15,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 	size?: "small" | "medium" | "large";
 	withShadow?: boolean;
+	children?: React.ReactNode;
 }
 
 export const Button = ({
@@ -22,6 +24,7 @@ export const Button = ({
 	type = "button",
 	size = "medium",
 	withShadow = false,
+	children,
 	...rest
 }: ButtonProps) => {
 	const className = classnames(
@@ -33,7 +36,12 @@ export const Button = ({
 
 	return (
 		<button className={className} {...rest}>
-			{label}
+			{RenderIf(!!label && !children, <>{label}</>)}
+			{RenderIf(!label && !!children, <>{children}</>)}
+			{RenderIf(
+				!!label && !!children,
+				<>Somente uma propriedade (label ou children)</>
+			)}
 		</button>
 	);
 };

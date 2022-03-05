@@ -12,17 +12,15 @@ type ApiTask = {
 	description: string;
 	boardIndex: number;
 	boardRef: string;
-	categories?: any[];
-	comments?: [
-		{
-			commentId: number;
-			userName: string;
-			userPhoto: string;
-			comment: string;
-			createdAt: string;
-			todoId: number;
-		}
-	];
+	categories?: { categoryId: number; categoryType: string; label: string }[];
+	comments?: {
+		commentId: number;
+		userName: string;
+		userPhoto: string;
+		comment: string;
+		createdAt: string;
+		todoId: number;
+	}[];
 };
 
 type Tasks = {
@@ -61,10 +59,16 @@ export const Home = () => {
 						id: _todo.todoId,
 						index: _todo.boardIndex,
 						createdAt: new Date().toLocaleDateString(),
+						categories:
+							_todo.categories?.map((category) => ({
+								type: category.categoryType,
+								text: category.label,
+							})) || [],
 						comments: _todo.comments?.length || 0,
-						lastComments: _todo.comments?.map(
-							({ userPhoto }) => userPhoto
-						),
+						lastComments:
+							_todo.comments
+								?.map(({ userPhoto }) => userPhoto)
+								.filter((_, index) => index < 3) || [],
 					} as CardProps)
 			)
 			.sort((a, b) => a.index - b.index);
@@ -78,10 +82,16 @@ export const Home = () => {
 						id: _todo.todoId,
 						index: _todo.boardIndex,
 						createdAt: new Date().toLocaleDateString(),
+						categories:
+							_todo.categories?.map((category) => ({
+								type: category.categoryType,
+								text: category.label,
+							})) || [],
 						comments: _todo.comments?.length || 0,
-						lastComments: _todo.comments?.map(
-							({ userPhoto }) => userPhoto
-						),
+						lastComments:
+							_todo.comments
+								?.map(({ userPhoto }) => userPhoto)
+								.filter((_, index) => index < 3) || [],
 					} as CardProps)
 			)
 			.sort((a, b) => a.index - b.index);
@@ -95,10 +105,16 @@ export const Home = () => {
 						id: _todo.todoId,
 						index: _todo.boardIndex,
 						createdAt: new Date().toLocaleDateString(),
+						categories:
+							_todo.categories?.map((category) => ({
+								type: category.categoryType,
+								text: category.label,
+							})) || [],
 						comments: _todo.comments?.length || 0,
-						lastComments: _todo.comments?.map(
-							({ userPhoto }) => userPhoto
-						),
+						lastComments:
+							_todo.comments
+								?.map(({ userPhoto }) => userPhoto)
+								.filter((_, index) => index < 3) || [],
 					} as CardProps)
 			)
 			.sort((a, b) => a.index - b.index);

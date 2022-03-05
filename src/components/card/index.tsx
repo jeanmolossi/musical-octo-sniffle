@@ -1,23 +1,30 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
 	HiLink,
 	HiOutlineChat,
 	HiPaperClip,
 	HiOutlinePhotograph,
+	HiSave,
+	HiPaperAirplane,
 } from "react-icons/hi";
 import styles from "./styles.module.scss";
 import { Button } from "../button";
 import { RenderIf } from "../../helpers/render-if";
-import {
-	Draggable,
-	DraggingStyle,
-	NotDraggingStyle,
-} from "react-beautiful-dnd";
+import { Draggable } from "react-beautiful-dnd";
 import { classnames } from "../../helpers/classnames";
 import { Modal } from "../modal";
 import { useModal } from "../../helpers/use-modal";
 import { Input } from "../input";
+import { api } from "../../data/api";
+import { useAuth } from "../../contexts/auth";
+
+interface ApiComment {
+	userName: string;
+	userPhoto?: string;
+	comment: string;
+	createdAt: string;
+}
 
 interface CartAttachment {
 	type: "file" | "image" | "link";
@@ -54,10 +61,34 @@ export const Card = ({
 	image,
 	attachments = [],
 	categories = [],
-	comments = 0,
+	comments: numComments = 0,
 	lastComments = [],
 }: CardProps) => {
+	const commentInputRef = useRef<HTMLInputElement>(null);
+	const [comments, setComments] = useState<ApiComment[]>([]);
 	const [isOpen, onOpen, onClose] = useModal();
+	const { user } = useAuth();
+
+	const loadComments = async () => {
+		const { data: todo } = await api.get<{ comments: ApiComment[] }>(
+			`/todo/${id}`
+		);
+
+		setComments(todo.comments);
+	};
+
+	const sendComment = async () => {
+		if (!commentInputRef.current) return;
+
+		await api.post(`/todo/${id}/comment`, {
+			comment: commentInputRef.current.value,
+			userName: user.user,
+			userPhoto: user.photo,
+		});
+
+		commentInputRef.current.value = "";
+		await loadComments();
+	};
 
 	const date = useMemo(() => {
 		const _date = new Date(createdAt).toDateString();
@@ -92,6 +123,10 @@ export const Card = ({
 				return <HiLink />;
 		}
 	};
+
+	useEffect(() => {
+		loadComments();
+	}, []);
 
 	return (
 		<>
@@ -172,7 +207,7 @@ export const Card = ({
 
 						<footer>
 							<button className={styles.card__comments_button}>
-								<HiOutlineChat /> {comments}
+								<HiOutlineChat /> {numComments}
 							</button>
 
 							<div className={styles.card__avatar_group}>
@@ -197,59 +232,66 @@ export const Card = ({
 					<h2>TODO description</h2>
 					<p>{description || ""}</p>
 
-					<div className={styles.divider}></div>
-					<div className={styles.task__comments}>
-						<div className={styles.task__comment}>
-							<div className={styles.comment__avatar}>
-								{RenderIf(
-									Boolean(author),
-									<img
-										src={
-											"https://randomuser.me/api/portraits/men/75.jpg"
-										}
-										alt="Avatar"
+					{RenderIf(
+						categories.length > 0,
+						<>
+							<div className={styles.divider}></div>
+							<div>
+								{categories.map((category, key) => (
+									<Button
+										key={key}
+										label={category.text}
+										variant={category.type}
 									/>
-								)}
+								))}
 							</div>
+						</>
+					)}
+					{RenderIf(
+						comments.length > 0,
+						<>
+							<div className={styles.divider}></div>
+							<div className={styles.task__comments}>
+								{comments.map((comment, key) => (
+									<div
+										className={styles.task__comment}
+										key={key}
+									>
+										<div className={styles.comment__avatar}>
+											{RenderIf(
+												Boolean(comment.userPhoto),
+												<img
+													src={comment.userPhoto}
+													alt="Avatar"
+												/>
+											)}
+										</div>
 
-							<div className={styles.comment__content}>
-								<span>John Doe says:</span>
-								<p>
-									I am using this as a reference every I need.
-									Thank you!
-								</p>
+										<div
+											className={styles.comment__content}
+										>
+											<span>
+												{comment.userName} says:
+											</span>
+											<p>{comment.comment}</p>
+										</div>
+									</div>
+								))}
 							</div>
-						</div>
+						</>
+					)}
 
-						<div className={styles.task__comment}>
-							<div className={styles.comment__avatar}>
-								{RenderIf(
-									Boolean(author),
-									<img
-										src={
-											"https://randomuser.me/api/portraits/women/30.jpg"
-										}
-										alt="Avatar"
-									/>
-								)}
-							</div>
-
-							<div className={styles.comment__content}>
-								<span>Elisa Sanches says:</span>
-								<p>
-									I am using this as a reference every I need.
-									Thank you!
-								</p>
-							</div>
-						</div>
-					</div>
 					<div className={styles.divider}></div>
 					<div className={styles.task__comment_area}>
 						<Input
+							ref={commentInputRef}
 							label="Add a comment"
 							placeholder="Leave a comment"
 							type="text"
 						/>
+						<Button variant="highlight" onClick={sendComment}>
+							<HiPaperAirplane />
+						</Button>
 					</div>
 				</div>
 			</Modal>

@@ -5,18 +5,21 @@ import styles from "./styles.module.scss";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 	label?: string;
+	ref?: React.Ref<HTMLInputElement>;
 }
 
-export const Input = ({ label, ...rest }: InputProps) => {
-	const id = useMemo(
-		() => (!!label ? generateLabelID() : undefined),
-		[label]
-	);
+export const Input = React.forwardRef<HTMLInputElement, InputProps>(
+	({ label, ...rest }: InputProps, ref) => {
+		const id = useMemo(
+			() => (!!label ? generateLabelID() : undefined),
+			[label]
+		);
 
-	return (
-		<div className={[styles.input].join(" ")}>
-			{RenderIf(!!label, <label htmlFor={id}>{label}</label>)}
-			<input id={id} {...rest} />
-		</div>
-	);
-};
+		return (
+			<div className={[styles.input].join(" ")}>
+				{RenderIf(!!label, <label htmlFor={id}>{label}</label>)}
+				<input ref={ref} id={id} {...rest} />
+			</div>
+		);
+	}
+);

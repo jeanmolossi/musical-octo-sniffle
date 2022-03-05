@@ -33,7 +33,7 @@ export interface CardProps {
 	id: number;
 	index: number;
 	title: string;
-	author: string;
+	author?: string;
 	createdAt: string;
 	description?: string;
 	image?: string;
@@ -48,7 +48,7 @@ export const Card = ({
 	id,
 	index,
 	title,
-	author,
+	author = "Confident",
 	createdAt,
 	description,
 	image,

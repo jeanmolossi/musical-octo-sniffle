@@ -28,7 +28,11 @@ export const Board = ({ cards, title, droppableId }: BoardProps) => {
 
 			<Droppable droppableId={droppableId}>
 				{(provided, snapshot) => (
-					<div ref={provided.innerRef} {...provided.droppableProps}>
+					<div
+						style={{ minHeight: 500 }}
+						ref={provided.innerRef}
+						{...provided.droppableProps}
+					>
 						{cards.map((card, index) => (
 							<Card
 								key={card.id}

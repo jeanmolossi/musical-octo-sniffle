@@ -6,7 +6,7 @@ import styles from "./styles.module.scss";
 import { Board } from "../../components/board";
 import { api } from "../../data/api";
 
-type ApiTask = {
+export type ApiTask = {
 	todoId: number;
 	title: string;
 	description: string;

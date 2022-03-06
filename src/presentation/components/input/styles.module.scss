@@ -1,0 +1,50 @@
+@import './src/presentation/styles/variables.scss';
+@import './src/presentation/styles/mixins.scss';
+
+.input {
+	margin: 0.5rem;
+	display: flex;
+	flex-direction: column;
+
+	> label {
+		color: $gray;
+		cursor: pointer;
+	}
+
+	> input {
+		font-size: 1rem;
+		color: $gray;
+
+		padding: 0.625rem;
+		border: none;
+		border-radius: 0.25rem;
+		@include boxShadow($gray);
+
+		outline: 1px solid transparent;
+		transition: outline-color 200ms ease-in-out;
+
+		&:active, &:focus {
+			outline-color: #{doOpacity(0.3, $gray)};
+		}
+	}
+
+	&.error {
+		> input {
+			@include boxShadow($red);
+
+			&:active, &:focus {
+				outline-color: #{doOpacity(0.3, $red)};
+			}
+		}
+	}
+
+	&.success {
+		> input {
+			@include boxShadow($green);
+
+			&:active, &:focus {
+				outline-color: #{doOpacity(0.3, $green)};
+			}
+		}
+	}
+}

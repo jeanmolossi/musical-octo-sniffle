@@ -1,0 +1,28 @@
+@import './src/presentation/styles/variables.scss';
+
+.boardContainer {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+
+	> h2 {
+		margin-bottom: 1rem;
+		font-weight: 700;
+		font-size: 0.9rem;
+		color: $mediumGray;
+		text-transform: uppercase;
+		display: inline-flex;
+		align-items: center;
+
+		> button {
+			opacity: 0;
+			visibility: hidden;
+		}
+
+		&:hover > button {
+			opacity: 1;
+			visibility: visible;
+			transition: all 0.2s ease-out;
+		}
+	}
+}

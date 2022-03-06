@@ -10,7 +10,10 @@ module.exports = {
         publicPath: '/'
     },
     resolve: {
-        extensions: ['.tsx', '.ts', '.js'],
+        extensions: ['.tsx', '.ts', '.js', '.scss'],
+		alias: {
+			'@': path.resolve(__dirname, 'src')
+		}
     },
     devtool: 'inline-source-map',
     devServer: {

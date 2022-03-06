@@ -11,9 +11,10 @@
     "emitDecoratorMetadata": true,                    /* Emit design-type metadata for decorated declarations in source files. */
     "module": "ES6",                                /* Specify what module code is generated. */
     "moduleResolution": "node",                       /* Specify how TypeScript looks up a file from a given module specifier. */
-    // "rootDir": "./",                                  /* Specify the root folder within your source files. */
-    // "baseUrl": "./",                                  /* Specify the base directory to resolve non-relative module names. */
+    "rootDir": "./",                                  /* Specify the root folder within your source files. */
+    "baseUrl": "./",                                  /* Specify the base directory to resolve non-relative module names. */
     "paths": {
+		"@/*": ["src/*"],
 		"crypto": ["./node_modules/crypto-browserify"],
 	},                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
     "resolveJsonModule": true,                        /* Enable importing .json files */
@@ -27,7 +28,8 @@
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
   },
   "include": [
-    "src"
+    "src",
+	"./index.tsx"
   ],
   "exclude": [
     "node_modules"

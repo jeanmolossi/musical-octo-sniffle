@@ -5,6 +5,7 @@ import { AuthProvider } from "@/presentation/contexts/auth";
 import { Home } from "@/presentation/pages/home";
 import { Login } from "@/presentation/pages/login";
 import { Team } from "@/presentation/pages/team";
+import { loadTodos, moveTodo } from "@/data";
 
 export const Router = () => {
 	return (
@@ -19,7 +20,12 @@ export const Router = () => {
 					}
 				/>
 				<Route path="/" element={<Layout />}>
-					<Route path="/home" element={<Home />} />
+					<Route
+						path="/home"
+						element={
+							<Home loadTodos={loadTodos} moveTodo={moveTodo} />
+						}
+					/>
 					<Route path="/team" element={<Team />} />
 				</Route>
 			</Routes>

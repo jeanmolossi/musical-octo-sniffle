@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Droppable } from "react-beautiful-dnd";
 import { HiCheckCircle, HiPlusCircle } from "react-icons/hi";
+import { ApiTask } from "@/domain";
 import { api } from "@/data/api";
 import { RenderIf } from "@/helpers/render-if";
 import { useModal } from "@/helpers/use-modal";
-import { ApiTask } from "@/presentation/pages/home";
 import { Button } from "@/presentation/components/button";
 import { Card, CardProps } from "@/presentation/components/card";
 import { Input } from "@/presentation/components/input";

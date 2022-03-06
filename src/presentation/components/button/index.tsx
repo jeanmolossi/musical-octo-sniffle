@@ -1,19 +1,13 @@
 import React from "react";
 import { classnames } from "@/helpers/classnames";
 import { RenderIf } from "@/helpers/render-if";
+import { Variants, Sizes } from "@/presentation/config";
 import styles from "./styles.module.scss";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	label?: string;
-	variant?:
-		| "neutral"
-		| "success"
-		| "warning"
-		| "danger"
-		| "info"
-		| "highlight";
-
-	size?: "small" | "medium" | "large";
+	variant?: Variants;
+	size?: Sizes;
 	withShadow?: boolean;
 	children?: React.ReactNode;
 }

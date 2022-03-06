@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 		const storageUser = await requestLogin({ username, password });
 		const _user = storageUserToUser(storageUser);
 
-		sessionStorage.setItem("user", JSON.stringify(storageUser));
+		sessionStorage.setItem("user", JSON.stringify(_user));
 		setUser(_user);
 	}, []);
 

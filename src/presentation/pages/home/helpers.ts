@@ -30,7 +30,7 @@ export function getPhotosFromComments(comments: ApiTaksComment[] = []) {
 }
 
 export function fromApiCommentToUserPhoto(comment: ApiTaksComment) {
-	return comment.userPhoto;
+	return comment.userPhoto || "";
 }
 
 export function photosAfterLimit(limit: number) {

@@ -3,6 +3,7 @@ import { DropResult } from "react-beautiful-dnd";
 import { CardProps } from "@/presentation/components";
 import { todoFromColumn, fromApiTaskToCardProps, ascByIndex } from "./helpers";
 import { HomeProps } from "./";
+import { useModal } from "@/helpers";
 
 type Tasks = {
 	todo: CardProps[];
@@ -15,6 +16,8 @@ type Columns = keyof Tasks;
 type WithIndex = { index: number };
 
 export function useHomeBehaviors({ loadTodos, moveTodo }: HomeProps) {
+	const [isOpenTaskModal, onOpenTaskModal, onCloseTaskModal] = useModal();
+
 	const [tasks, setTasks] = useState<Tasks>({
 		todo: [],
 		doing: [],
@@ -150,6 +153,19 @@ export function useHomeBehaviors({ loadTodos, moveTodo }: HomeProps) {
 		[]
 	);
 
+	const [selectedTodo, setSelectedTodo] = useState(0);
+	const onOpenTask = useCallback((todoId: number) => {
+		return () => {
+			setSelectedTodo(todoId);
+			onOpenTaskModal();
+		};
+	}, []);
+
+	const onCloseTask = useCallback(async () => {
+		onCloseTaskModal();
+		await loadTasks();
+	}, []);
+
 	useEffect(() => {
 		loadTasks();
 	}, []);
@@ -158,5 +174,11 @@ export function useHomeBehaviors({ loadTodos, moveTodo }: HomeProps) {
 		tasks,
 		onDragEnd,
 		onDone,
+
+		/** TASK MODAL */
+		selectedTodo,
+		isOpenTaskModal,
+		onOpenTask,
+		onCloseTask,
 	};
 }

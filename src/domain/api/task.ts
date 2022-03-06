@@ -1,3 +1,5 @@
+import { Variants } from "@/presentation/config";
+
 export type ApiTask = {
 	todoId: number;
 	title: string;
@@ -11,7 +13,7 @@ export type ApiTask = {
 export type ApiTaksComment = {
 	commentId: number;
 	userName: string;
-	userPhoto: string;
+	userPhoto?: string;
 	comment: string;
 	createdAt: string;
 	todoId: number;
@@ -19,6 +21,6 @@ export type ApiTaksComment = {
 
 export type ApiTaskCategory = {
 	categoryId: number;
-	categoryType: string;
+	categoryType: Variants;
 	label: string;
 };

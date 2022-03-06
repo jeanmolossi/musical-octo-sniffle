@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import { ApiTask } from "@/domain";
 import { useModal } from "@/helpers";
@@ -6,6 +6,7 @@ import { Board, Card } from "@/presentation/components";
 import { NewTaskModal } from "./components/new-task-modal";
 import { useHomeBehaviors } from "./home-behaviors";
 import styles from "./styles.module.scss";
+import { OpenTaskModal } from "./components/open-task-modal";
 
 export interface HomeProps {
 	loadTodos: () => Promise<ApiTask[]>;
@@ -21,7 +22,16 @@ export const Home = (props: HomeProps) => {
 	const [isOpenDoing, onOpenDoing, onCloseDoing] = useModal();
 	const [isOpenDone, onOpenDone, onCloseDone] = useModal();
 
-	const { onDragEnd, tasks, onDone } = useHomeBehaviors(props);
+	const {
+		onDragEnd,
+		tasks,
+		onDone,
+		// TASK MODAL
+		selectedTodo,
+		isOpenTaskModal,
+		onCloseTask,
+		onOpenTask,
+	} = useHomeBehaviors(props);
 
 	return (
 		<div className={styles.container}>
@@ -32,7 +42,12 @@ export const Home = (props: HomeProps) => {
 					onOpen={onOpenTodo}
 				>
 					{tasks.todo.map((card, index) => (
-						<Card key={card.id} {...card} index={index} />
+						<Card
+							key={card.id}
+							{...card}
+							index={index}
+							onOpen={onOpenTask(card.id)}
+						/>
 					))}
 				</Board>
 
@@ -42,7 +57,12 @@ export const Home = (props: HomeProps) => {
 					onOpen={onOpenDoing}
 				>
 					{tasks.doing.map((card, index) => (
-						<Card key={card.id} {...card} index={index} />
+						<Card
+							key={card.id}
+							{...card}
+							index={index}
+							onOpen={onOpenTask(card.id)}
+						/>
 					))}
 				</Board>
 
@@ -52,7 +72,12 @@ export const Home = (props: HomeProps) => {
 					onOpen={onOpenDone}
 				>
 					{tasks.done.map((card, index) => (
-						<Card key={card.id} {...card} index={index} />
+						<Card
+							key={card.id}
+							{...card}
+							index={index}
+							onOpen={onOpenTask(card.id)}
+						/>
 					))}
 				</Board>
 			</DragDropContext>
@@ -76,6 +101,12 @@ export const Home = (props: HomeProps) => {
 				onClose={onCloseDone}
 				title="Done"
 				onDone={onDone("doneColumn", tasks.done)}
+			/>
+
+			<OpenTaskModal
+				todoId={selectedTodo}
+				isOpen={isOpenTaskModal}
+				onClose={onCloseTask}
 			/>
 		</div>
 	);

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useMemo } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { Link } from "react-router-dom";
 import {
@@ -6,20 +6,11 @@ import {
 	HiOutlineChat,
 	HiPaperClip,
 	HiOutlinePhotograph,
-	HiPaperAirplane,
 } from "react-icons/hi";
-import { api } from "@/data/api";
-import { RenderIf, classnames, useModal } from "@/helpers";
-import { Button, Modal, Input } from "@/presentation/components";
-import { useAuth } from "@/presentation/contexts";
+import { RenderIf, classnames } from "@/helpers";
+import { Button } from "@/presentation/components";
+import { Variants } from "@/presentation/config";
 import styles from "./styles.module.scss";
-
-interface ApiComment {
-	userName: string;
-	userPhoto?: string;
-	comment: string;
-	createdAt: string;
-}
 
 interface CartAttachment {
 	type: "file" | "image" | "link";
@@ -27,7 +18,7 @@ interface CartAttachment {
 }
 
 interface Category {
-	type: "neutral" | "success" | "warning" | "danger" | "info" | "highlight";
+	type: Variants;
 	text: string;
 }
 
@@ -44,6 +35,7 @@ export interface CardProps {
 	comments?: number;
 	lastComments?: string[];
 	isDragging?: boolean;
+	onOpen?: () => void;
 }
 
 export const Card = ({
@@ -58,33 +50,8 @@ export const Card = ({
 	categories = [],
 	comments: numComments = 0,
 	lastComments = [],
+	onOpen,
 }: CardProps) => {
-	const { user } = useAuth();
-	const commentInputRef = useRef<HTMLInputElement>(null);
-	const [comments, setComments] = useState<ApiComment[]>([]);
-	const [isOpen, onOpen, onClose] = useModal();
-
-	const loadComments = async () => {
-		const { data: todo } = await api.get<{ comments: ApiComment[] }>(
-			`/todo/${id}`
-		);
-
-		setComments(todo.comments);
-	};
-
-	const sendComment = async () => {
-		if (!commentInputRef.current) return;
-
-		await api.post(`/todo/${id}/comment`, {
-			comment: commentInputRef.current.value,
-			userName: user.name,
-			userPhoto: user.photo,
-		});
-
-		commentInputRef.current.value = "";
-		await loadComments();
-	};
-
 	const date = useMemo(() => {
 		const _date = new Date(createdAt).toDateString();
 
@@ -118,10 +85,6 @@ export const Card = ({
 				return <HiLink />;
 		}
 	};
-
-	useEffect(() => {
-		loadComments();
-	}, []);
 
 	return (
 		<>
@@ -219,77 +182,6 @@ export const Card = ({
 					</div>
 				)}
 			</Draggable>
-
-			<Modal isOpen={isOpen} onClose={onClose}>
-				<div className={styles.modal__content}>
-					<h1>{title}</h1>
-
-					<h2>TODO description</h2>
-					<p>{description || ""}</p>
-
-					{RenderIf(
-						categories.length > 0,
-						<>
-							<div className={styles.divider}></div>
-							<div>
-								{categories.map((category, key) => (
-									<Button
-										key={key}
-										label={category.text}
-										variant={category.type}
-									/>
-								))}
-							</div>
-						</>
-					)}
-					{RenderIf(
-						comments.length > 0,
-						<>
-							<div className={styles.divider}></div>
-							<div className={styles.task__comments}>
-								{comments.map((comment, key) => (
-									<div
-										className={styles.task__comment}
-										key={key}
-									>
-										<div className={styles.comment__avatar}>
-											{RenderIf(
-												Boolean(comment.userPhoto),
-												<img
-													src={comment.userPhoto}
-													alt="Avatar"
-												/>
-											)}
-										</div>
-
-										<div
-											className={styles.comment__content}
-										>
-											<span>
-												{comment.userName} says:
-											</span>
-											<p>{comment.comment}</p>
-										</div>
-									</div>
-								))}
-							</div>
-						</>
-					)}
-
-					<div className={styles.divider}></div>
-					<div className={styles.task__comment_area}>
-						<Input
-							ref={commentInputRef}
-							label="Add a comment"
-							placeholder="Leave a comment"
-							type="text"
-						/>
-						<Button variant="highlight" onClick={sendComment}>
-							<HiPaperAirplane />
-						</Button>
-					</div>
-				</div>
-			</Modal>
 		</>
 	);
 };

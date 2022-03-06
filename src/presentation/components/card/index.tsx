@@ -59,10 +59,10 @@ export const Card = ({
 	comments: numComments = 0,
 	lastComments = [],
 }: CardProps) => {
+	const { user } = useAuth();
 	const commentInputRef = useRef<HTMLInputElement>(null);
 	const [comments, setComments] = useState<ApiComment[]>([]);
 	const [isOpen, onOpen, onClose] = useModal();
-	const { user } = useAuth();
 
 	const loadComments = async () => {
 		const { data: todo } = await api.get<{ comments: ApiComment[] }>(

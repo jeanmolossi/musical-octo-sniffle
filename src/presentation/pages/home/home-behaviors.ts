@@ -12,6 +12,8 @@ type Tasks = {
 
 type Columns = keyof Tasks;
 
+type WithIndex = { index: number };
+
 export function useHomeBehaviors({ loadTodos, moveTodo }: HomeProps) {
 	const [tasks, setTasks] = useState<Tasks>({
 		todo: [],
@@ -129,6 +131,25 @@ export function useHomeBehaviors({ loadTodos, moveTodo }: HomeProps) {
 		[moveSameColumn, moveBetweenColumns]
 	);
 
+	const onDone = useCallback(
+		(board: string, cards: WithIndex[]) =>
+			async (
+				onDoneCallback: (
+					biggerBoardIndex: number,
+					board: string
+				) => Promise<void> | void
+			) => {
+				const biggerBoardIndex = cards.reduce(
+					(acc, card, i) => Math.max(acc, card.index, i) + 1,
+					0
+				);
+
+				await onDoneCallback(biggerBoardIndex, board);
+				await loadTasks();
+			},
+		[]
+	);
+
 	useEffect(() => {
 		loadTasks();
 	}, []);
@@ -136,5 +157,6 @@ export function useHomeBehaviors({ loadTodos, moveTodo }: HomeProps) {
 	return {
 		tasks,
 		onDragEnd,
+		onDone,
 	};
 }

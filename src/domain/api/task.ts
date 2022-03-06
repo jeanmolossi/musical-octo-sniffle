@@ -4,11 +4,11 @@ export type ApiTask = {
 	description: string;
 	boardIndex: number;
 	boardRef: string;
-	categories?: ApiCategory[];
-	comments?: ApiComment[];
+	categories?: ApiTaskCategory[];
+	comments?: ApiTaksComment[];
 };
 
-export type ApiComment = {
+export type ApiTaksComment = {
 	commentId: number;
 	userName: string;
 	userPhoto: string;
@@ -17,7 +17,7 @@ export type ApiComment = {
 	todoId: number;
 };
 
-export type ApiCategory = {
+export type ApiTaskCategory = {
 	categoryId: number;
 	categoryType: string;
 	label: string;

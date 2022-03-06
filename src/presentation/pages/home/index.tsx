@@ -1,7 +1,9 @@
 import React from "react";
 import { DragDropContext } from "react-beautiful-dnd";
-import { Board } from "@/presentation/components";
 import { ApiTask } from "@/domain";
+import { useModal } from "@/helpers";
+import { Board, Card } from "@/presentation/components";
+import { NewTaskModal } from "./components/new-task-modal";
 import { useHomeBehaviors } from "./home-behaviors";
 import styles from "./styles.module.scss";
 
@@ -15,7 +17,11 @@ export interface HomeProps {
 }
 
 export const Home = (props: HomeProps) => {
-	const { onDragEnd, tasks } = useHomeBehaviors(props);
+	const [isOpenTodo, onOpenTodo, onCloseTodo] = useModal();
+	const [isOpenDoing, onOpenDoing, onCloseDoing] = useModal();
+	const [isOpenDone, onOpenDone, onCloseDone] = useModal();
+
+	const { onDragEnd, tasks, onDone } = useHomeBehaviors(props);
 
 	return (
 		<div className={styles.container}>
@@ -23,21 +29,54 @@ export const Home = (props: HomeProps) => {
 				<Board
 					title="TO DO"
 					droppableId="todoColumn"
-					cards={tasks.todo}
-				/>
+					onOpen={onOpenTodo}
+				>
+					{tasks.todo.map((card, index) => (
+						<Card key={card.id} {...card} index={index} />
+					))}
+				</Board>
 
 				<Board
 					title="Doing"
 					droppableId="doingColumn"
-					cards={tasks.doing}
-				/>
+					onOpen={onOpenDoing}
+				>
+					{tasks.doing.map((card, index) => (
+						<Card key={card.id} {...card} index={index} />
+					))}
+				</Board>
 
 				<Board
 					title="Done"
 					droppableId="doneColumn"
-					cards={tasks.done}
-				/>
+					onOpen={onOpenDone}
+				>
+					{tasks.done.map((card, index) => (
+						<Card key={card.id} {...card} index={index} />
+					))}
+				</Board>
 			</DragDropContext>
+
+			<NewTaskModal
+				isOpen={isOpenTodo}
+				onClose={onCloseTodo}
+				title="To Do"
+				onDone={onDone("todoColumn", tasks.todo)}
+			/>
+
+			<NewTaskModal
+				isOpen={isOpenDoing}
+				onClose={onCloseDoing}
+				title="Doing"
+				onDone={onDone("doingColumn", tasks.doing)}
+			/>
+
+			<NewTaskModal
+				isOpen={isOpenDone}
+				onClose={onCloseDone}
+				title="Done"
+				onDone={onDone("doneColumn", tasks.done)}
+			/>
 		</div>
 	);
 };

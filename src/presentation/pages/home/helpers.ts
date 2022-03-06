@@ -1,4 +1,4 @@
-import { ApiTask, ApiCategory, ApiComment } from "@/domain";
+import { ApiTask, ApiTaskCategory, ApiTaksComment } from "@/domain";
 import { CardProps } from "@/presentation/components";
 import { Variants } from "@/presentation/config";
 
@@ -18,18 +18,18 @@ export function fromApiTaskToCardProps(todo: ApiTask): CardProps {
 	};
 }
 
-export function fromApiCategoryToCategory(category: ApiCategory) {
+export function fromApiCategoryToCategory(category: ApiTaskCategory) {
 	return {
 		type: category.categoryType as Variants,
 		text: category.label,
 	};
 }
 
-export function getPhotosFromComments(comments: ApiComment[] = []) {
+export function getPhotosFromComments(comments: ApiTaksComment[] = []) {
 	return comments.map(fromApiCommentToUserPhoto).filter(photosAfterLimit(3));
 }
 
-export function fromApiCommentToUserPhoto(comment: ApiComment) {
+export function fromApiCommentToUserPhoto(comment: ApiTaksComment) {
 	return comment.userPhoto;
 }
 

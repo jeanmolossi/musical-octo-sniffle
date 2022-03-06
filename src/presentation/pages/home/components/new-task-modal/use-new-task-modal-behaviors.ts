@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ApiCategory } from "@/domain";
-import { NewTaskModalProps } from ".";
-import { loadCategories } from "@/data/services/load-categories";
-import { createTodo } from "@/data/services/create-todo";
+import { loadCategories, createTodo } from "@/data";
+import { NewTaskModalProps } from "./";
 
 interface Categories extends ApiCategory {
 	selected?: boolean;
@@ -47,14 +46,16 @@ export function useNewTaskModalBehaviors({
 			} catch (error: any) {
 				alert(error.response?.data.error || error.message);
 			}
+
+			onClose?.();
 		},
 		[categories, onClose]
 	);
 
-	const localOnDone = useCallback(async () => {
-		await onDone?.(newCard);
-		onClose?.();
-	}, [onDone, newCard]);
+	const localOnDone = useCallback(
+		async () => onDone?.(newCard),
+		[onDone, newCard]
+	);
 
 	useEffect(() => {
 		loadCategories().then(setCategories);

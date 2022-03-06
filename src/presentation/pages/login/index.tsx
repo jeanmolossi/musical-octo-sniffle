@@ -1,24 +1,12 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
-import { Button } from "@/presentation/components/button";
-import { Input } from "@/presentation/components/input";
-import { useAuth } from "@/presentation/contexts/auth";
+import React from "react";
+import { Button } from "@/presentation/components";
+import { Input } from "@/presentation/components";
+import { useLoginBehaviors } from "./login-behaviors";
 import styles from "./styles.module.scss";
 
 export const Login = () => {
-	const { login } = useAuth();
-
-	const [username, setUsername] = useState("");
-	const [pass, setPass] = useState("");
-
-	const onSubmit = (e: FormEvent) => {
-		e.preventDefault();
-		try {
-			login(username, pass);
-		} catch (e) {
-			const err = e as Error;
-			alert(err.message);
-		}
-	};
+	const { onChangePassword, onChangeUsername, onSubmit } =
+		useLoginBehaviors();
 
 	return (
 		<div className={styles.container}>
@@ -31,18 +19,14 @@ export const Login = () => {
 					<Input
 						label="Username"
 						placeholder="Ex.: johndoe"
-						onChange={(e: ChangeEvent<HTMLInputElement>) =>
-							setUsername(e.target.value)
-						}
+						onChange={onChangeUsername}
 					/>
 
 					<Input
 						label="Password"
 						placeholder="type your password"
 						type="password"
-						onChange={(e: ChangeEvent<HTMLInputElement>) =>
-							setPass(e.target.value)
-						}
+						onChange={onChangePassword}
 					/>
 
 					<Button label="Login" variant="info" />

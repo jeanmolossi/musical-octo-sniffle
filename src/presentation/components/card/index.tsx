@@ -9,13 +9,9 @@ import {
 	HiPaperAirplane,
 } from "react-icons/hi";
 import { api } from "@/data/api";
-import { RenderIf } from "@/helpers/render-if";
-import { classnames } from "@/helpers/classnames";
-import { useModal } from "@/helpers/use-modal";
-import { Button } from "@/presentation/components/button";
-import { Modal } from "@/presentation/components/modal";
-import { Input } from "@/presentation/components/input";
-import { useAuth } from "@/presentation/contexts/auth";
+import { RenderIf, classnames, useModal } from "@/helpers";
+import { Button, Modal, Input } from "@/presentation/components";
+import { useAuth } from "@/presentation/contexts";
 import styles from "./styles.module.scss";
 
 interface ApiComment {
@@ -81,7 +77,7 @@ export const Card = ({
 
 		await api.post(`/todo/${id}/comment`, {
 			comment: commentInputRef.current.value,
-			userName: user.user,
+			userName: user.name,
 			userPhoto: user.photo,
 		});
 

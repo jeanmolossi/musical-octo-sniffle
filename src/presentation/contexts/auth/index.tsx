@@ -1,16 +1,14 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+	createContext,
+	useCallback,
+	useContext,
+	useEffect,
+	useState,
+} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { User } from "@/@types/user";
-
-interface AuthContextProps {
-	user: User;
-	login: (username: string, password: string) => void;
-	logout: () => void;
-}
-
-interface AuthProviderProps {
-	children?: React.ReactNode;
-}
+import { login as requestLogin } from "@/data";
+import { User } from "@/domain";
+import { AuthContextProps, AuthProviderProps, StorageUser } from "./typings";
 
 const AuthContext = createContext({} as AuthContextProps);
 
@@ -21,29 +19,19 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 	const [user, setUser] = useState<User>(() => {
 		const _user = sessionStorage.getItem("user");
 		if (_user) {
-			return JSON.parse(_user);
+			return JSON.parse(_user) as User;
 		}
 
-		return null;
+		return null as any;
 	});
 
-	const login = (username: string, password: string) => {
-		let auth = false;
-		["1", "2", "3"].forEach((id) => {
-			const sessionUser = sessionStorage.getItem("@fake-user/" + id);
-			if (sessionUser) {
-				const _user: User = JSON.parse(sessionUser);
-				if (_user.username === username && _user.pass === password) {
-					sessionStorage.setItem("user", JSON.stringify(_user));
-					setUser(_user);
-					auth = true;
-					return;
-				}
-			}
-		});
+	const login = useCallback(async (username: string, password: string) => {
+		const storageUser = await requestLogin({ username, password });
+		const _user = storageUserToUser(storageUser);
 
-		if (!auth) throw new Error("Credenciais invalidas");
-	};
+		sessionStorage.setItem("user", JSON.stringify(storageUser));
+		setUser(_user);
+	}, []);
 
 	const logout = () => {
 		sessionStorage.removeItem("user");
@@ -67,4 +55,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
 export function useAuth() {
 	return useContext(AuthContext);
+}
+
+function storageUserToUser({ user, ...rest }: StorageUser): User {
+	return {
+		...rest,
+		name: user,
+	};
 }

@@ -1,9 +1,9 @@
 import React from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import { Board } from "@/presentation/components";
+import { ApiTask } from "@/domain";
 import { useHomeBehaviors } from "./home-behaviors";
 import styles from "./styles.module.scss";
-import { ApiTask } from "@/domain";
 
 export interface HomeProps {
 	loadTodos: () => Promise<ApiTask[]>;

@@ -1,5 +1,5 @@
 import { ApiTask, ApiCategory, ApiComment } from "@/domain";
-import { CardProps } from "@/presentation/components/card";
+import { CardProps } from "@/presentation/components";
 import { Variants } from "@/presentation/config";
 
 export function todoFromColumn(column: string) {

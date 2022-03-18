@@ -3,6 +3,7 @@ import { api } from "../api";
 
 type NewTask = {
 	title: string;
+	author: string;
 	description: string;
 	boardIndex: number;
 	boardRef: string;

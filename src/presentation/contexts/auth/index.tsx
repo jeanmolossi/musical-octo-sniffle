@@ -36,6 +36,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 	const logout = () => {
 		sessionStorage.removeItem("user");
 		setUser(null as any);
+		navigate("/", { replace: true });
 	};
 
 	useEffect(() => {

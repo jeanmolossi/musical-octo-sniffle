@@ -1,10 +1,10 @@
 {
   "name": "todo-app-web",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js",
+    "start": "node server.js",
     "start:dev": "webpack serve --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,6 +12,8 @@
   "dependencies": {
     "axios": "^0.26.0",
     "crypto-js": "^4.1.1",
+    "express": "^4.17.3",
+    "express-history-api-fallback": "^2.2.1",
     "react": "^17.0.2",
     "react-beautiful-dnd": "^13.1.0",
     "react-dom": "^17.0.2",

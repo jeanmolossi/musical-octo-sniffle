@@ -1,20 +1,11 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { DefinePlugin } = require('webpack')
+const { merge } = require('webpack-merge');
+const common = require('./webpack.common');
 
-module.exports = {
+module.exports = merge(common, {
     mode: 'development',
-    entry: './index.tsx',
-    output: {
-        path: path.resolve(__dirname, 'public'),
-        filename: 'bundle.js',
-        publicPath: '/'
-    },
-    resolve: {
-        extensions: ['.tsx', '.ts', '.js', '.scss'],
-		alias: {
-			'@': path.resolve(__dirname, 'src')
-		}
-    },
     devtool: 'inline-source-map',
     devServer: {
         static: './public',
@@ -38,8 +29,11 @@ module.exports = {
         ]
     },
     plugins: [
+		new DefinePlugin({
+			'process.env.API_URL': process.env.API_URL || JSON.stringify('http://localhost:3001/api'),
+		}),
         new HtmlWebpackPlugin({
             template: './templates/template-dev.html',
         }),
     ]
-}
+});
